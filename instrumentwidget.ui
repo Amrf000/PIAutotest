@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InstrumentWidget</class>
+ <widget class="QWidget" name="InstrumentWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>751</width>
+    <height>637</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <item>
+    <widget class="QGroupBox" name="groupBox_ctrl_2">
+     <property name="title">
+      <string>Kirin硬件部PI测试专项组</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>测试设定</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_9" columnstretch="1,2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_44">
+                 <property name="text">
+                  <string>测试类型:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox_Slect_Model"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <item>
+                <widget class="QLabel" name="label_53">
+                 <property name="text">
+                  <string>向量时间:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_vec_time"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>示波器设定</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_extra_2" stretch="2,1,2,1,1,1,1">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Horizontal Scale(us):</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_horizontalScale">
+               <property name="decimals">
+                <number>2</number>
+               </property>
+               <property name="maximum">
+                <double>100000000.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>10.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_43">
+               <property name="text">
+                <string>Horizontal Positon(us):</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_horizontalPosition">
+               <property name="decimals">
+                <number>2</number>
+               </property>
+               <property name="maximum">
+                <double>100000000.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>10.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_refresh_remote_desktop_2">
+               <property name="text">
+                <string>RUN</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_refresh_remote_desktop_3">
+               <property name="text">
+                <string>RESET</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_refresh_remote_desktop">
+               <property name="text">
+                <string>REFRESH</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_trigger_2">
+          <property name="title">
+           <string>触发选项</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>触发通道</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>触发电平</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>触发沿</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>触发方式</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QComboBox" name="comboBox_trigger_channel"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="comboBox_trigger_edge"/>
+             </item>
+             <item row="1" column="3">
+              <widget class="QComboBox" name="comboBox_trigger_mode"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_trigger_level">
+               <property name="decimals">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <double>99.998999999999995</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_measure_2">
+          <property name="title">
+           <string>测试项</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="4,1">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>通道选择</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_32">
+                   <property name="text">
+                    <string>Type1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_33">
+                   <property name="text">
+                    <string>Type2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_34">
+                   <property name="text">
+                    <string>Type3</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_35">
+                   <property name="text">
+                    <string>Type4</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Channel1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch1_measure_type1"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch1_measure_type2"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch1_measure_type3"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch1_measure_type4"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_ch1_measure_hold">
+                   <property name="text">
+                    <string>Hold</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Channel2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch2_measure_type1"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch2_measure_type2"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch2_measure_type3"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch2_measure_type4"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_ch2_measure_hold">
+                   <property name="text">
+                    <string>Hold</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="text">
+                    <string>Channel3</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch3_measure_type1"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch3_measure_type2"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch3_measure_type3"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch3_measure_type4"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_ch3_measure_hold">
+                   <property name="text">
+                    <string>Hold</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Channel4</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch4_measure_type1"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch4_measure_type2"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch4_measure_type3"/>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="comboBox_ch4_measure_type4"/>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_ch4_measure_hold">
+                   <property name="text">
+                    <string>Hold</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <widget class="QPushButton" name="pushButton_set_measure_2">
+                 <property name="text">
+                  <string>设置测量</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_clear_measure_2">
+                 <property name="text">
+                  <string>清除测量值</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_channel_set_2">
+          <property name="title">
+           <string>通道设置</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_channel_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>Channel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>Label</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Offset</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Scale</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>Coupling</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>BandWidth</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_channel1">
+               <property name="text">
+                <string>Channel1</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_channel1_label"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLineEdit" name="lineEdit_channel1_offset"/>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="lineEdit_channel1_scale"/>
+             </item>
+             <item row="1" column="4">
+              <widget class="QComboBox" name="comboBox_channel1_coupling"/>
+             </item>
+             <item row="1" column="5">
+              <widget class="QComboBox" name="comboBox_channel1_bandwidth"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_channel2">
+               <property name="text">
+                <string>Channel2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEdit_channel2_label"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLineEdit" name="lineEdit_channel2_offset"/>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="lineEdit_channel2_scale"/>
+             </item>
+             <item row="2" column="4">
+              <widget class="QComboBox" name="comboBox_channel2_coupling"/>
+             </item>
+             <item row="2" column="5">
+              <widget class="QComboBox" name="comboBox_channel2_bandwidth"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_channel3">
+               <property name="text">
+                <string>Channel3</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="lineEdit_channel3_label"/>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLineEdit" name="lineEdit_channel3_offset"/>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="lineEdit_channel3_scale"/>
+             </item>
+             <item row="3" column="4">
+              <widget class="QComboBox" name="comboBox_channel3_coupling"/>
+             </item>
+             <item row="3" column="5">
+              <widget class="QComboBox" name="comboBox_channel3_bandwidth"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_channel4">
+               <property name="text">
+                <string>Channel4</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="lineEdit_channel4_label"/>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLineEdit" name="lineEdit_channel4_offset"/>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLineEdit" name="lineEdit_channel4_scale"/>
+             </item>
+             <item row="4" column="4">
+              <widget class="QComboBox" name="comboBox_channel4_coupling"/>
+             </item>
+             <item row="4" column="5">
+              <widget class="QComboBox" name="comboBox_channel4_bandwidth"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0">
+             <property name="spacing">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pushButton_set_channel_2">
+               <property name="text">
+                <string>设置通道</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_close_notsel_channel_2">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>关闭未选
+中通道</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

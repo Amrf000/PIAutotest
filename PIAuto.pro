@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-03-04T19:14:28
+# Project created by QtCreator 2019-03-04T15:56:52
 #
 #-------------------------------------------------
 
@@ -25,14 +25,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    instrumentwidget.cpp \
+    instconfig.cpp \
+    emb.cpp \
+    workerthread.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    instrumentwidget.h \
+    instconfig.h \
+    emb.h \
+    workerthread.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    instrumentwidget.ui
 
-INCLUDEPATH += C:\Users\liuyawu\AppData\Local\Programs\Python\Python35\include
+INCLUDEPATH += C:/Users/lwx531574/AppData/Local/Programs/Python/Python37/include#D:/Python271/include
+#LIBS += D:/Python271/libs/libpython27.a
+LIBS += -LC:/Users/lwx531574/AppData/Local/Programs/Python/Python37/libs -lpython3 #-LD:/Python271/libs -lpython27
 
-LIBS += -lpython3 -LC:\Users\liuyawu\AppData\Local\Programs\Python\Python35\libs
+include(3rdparty/qtxlsx/src/xlsx/qtxlsx.pri)
+
+DESTDIR=bin
+OBJECTS_DIR=generated_files
+MOC_DIR=generated_files
+
+RESOURCES += \
+    res.qrc
