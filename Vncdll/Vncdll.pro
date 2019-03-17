@@ -1,19 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-05-26T22:41:32
+# Project created by QtCreator 2019-03-16T23:50:27
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       -= gui
+QT += network
+TARGET = Vncdll
+TEMPLATE = lib
 
-CONFIG += c++11
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-LIBS += -luser32
-
-TARGET = embed
-TEMPLATE = app
+DEFINES += VNCDLL_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -26,12 +22,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    widgetcontainer.cpp
+        vncdll.cpp \
+    dllmain.cpp \
+    client.cpp
 
 HEADERS += \
-        mainwindow.h \
-    widgetcontainer.h
+        vncdll.h \
+        vncdll_global.h \  
+    client.h
+
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+}
+
+DESTDIR=../../bin
+OBJECTS_DIR=generated_files
+MOC_DIR=generated_files
+
+LIBS += -lUser32
+LIBS += -lGdi32
+
+INCLUDEPATH += E:\dev\visa\PIAutotest\Detours-master\include
+LIBS += -LE:\dev\visa\PIAutotest\Detours-master\lib.X64 -ldetours

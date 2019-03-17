@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "xlsxdocument.h"
 #include "instconfig.h"
+#include <QWidget>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -22,7 +24,6 @@ public:
     void SaveInI();
     void SaveParam();
     void init();
-
 private slots:
 //    void on_start_toggled(bool checked);
 
@@ -58,5 +59,5 @@ private slots:
     void on_pushButton_open_local_path_2_clicked();
     void on_start_toggled(bool checked);
 };
-
+extern MainWindow* pMain;
 #endif // MAINWINDOW_H

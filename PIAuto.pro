@@ -4,7 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
+
+CONFIG += c++11
+#CONFIG += console
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,28 +32,70 @@ SOURCES += \
     instrumentwidget.cpp \
     instconfig.cpp \
     emb.cpp \
-    workerthread.cpp
+    workerthread.cpp \
+    widgetcontainer.cpp \
+    injection.cpp \
+    server.cpp
 
 HEADERS += \
         mainwindow.h \
     instrumentwidget.h \
     instconfig.h \
     emb.h \
-    workerthread.h
+    workerthread.h \
+    widgetcontainer.h \
+    injection.h \
+    server.h
 
 FORMS += \
         mainwindow.ui \
     instrumentwidget.ui
 
-INCLUDEPATH += C:/Users/lwx531574/AppData/Local/Programs/Python/Python37/include#D:/Python271/include
+##D:/Python271/include
 #LIBS += D:/Python271/libs/libpython27.a
-LIBS += -LC:/Users/lwx531574/AppData/Local/Programs/Python/Python37/libs -lpython3 #-LD:/Python271/libs -lpython27
+# #-LD:/Python271/libs -lpython27
+
+
 
 include(3rdparty/qtxlsx/src/xlsx/qtxlsx.pri)
 
-DESTDIR=bin
+DESTDIR=../bin
 OBJECTS_DIR=generated_files
 MOC_DIR=generated_files
 
 RESOURCES += \
     res.qrc
+
+#INCLUDEPATH += D:\dev\VISA\client\libvncserver-win-master\libvncserver-win-master
+#LIBS += -LD:\dev\VISA\client\libvncserver-win-master\libvncserver-win-master\build\Debug -lvncclient
+#INCLUDEPATH += D:\dev\VISA\client\SDL2-master\include
+#LIBS += -LD:\dev\VISA\client\SDL2-master\VisualC\Win32\Debug -lSDL2main
+#LIBS += -LD:\dev\VISA\client\SDL2-master\VisualC\Win32\Debug -lSDL2
+LIBS += -lWs2_32
+LIBS += -lkernel32
+LIBS += -luser32
+LIBS += -lwinmm
+LIBS += -ladvapi32
+LIBS += -lOle32
+LIBS += -lGdi32
+LIBS += -lVersion
+LIBS += -lImm32
+LIBS += -lOleAut32
+LIBS += -lSetupapi
+LIBS += -lShell32
+
+win32 {
+
+    ## Windows common build here
+
+    !contains(QMAKE_TARGET.arch, x86_64) {
+        message("x86 build")
+INCLUDEPATH += D:\Users\lwx531574\AppData\Local\Programs\Python\Python37-32\include
+LIBS += -LD:\Users\lwx531574\AppData\Local\Programs\Python\Python37-32\libs -lpython3
+
+    } else {
+        message("x86_64 build")
+INCLUDEPATH += C:\Users\liuyawu\AppData\Local\Programs\Python\Python35\include
+LIBS += -LC:\Users\liuyawu\AppData\Local\Programs\Python\Python35\libs -lpython3
+    }
+}

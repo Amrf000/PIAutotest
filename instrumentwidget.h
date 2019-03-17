@@ -77,6 +77,7 @@ private slots:
     void on_doubleSpinBox_horizontalPosition_valueChanged(double arg1);
     void on_lineEdit_vec_time_textEdited(const QString &arg1);
     void on_comboBox_Slect_Model_currentIndexChanged(const QString &arg1);
+    void on_textEditProfile_textChanged();
 };
 
 #endif // INSTRUMENTWIDGET_H

@@ -64,6 +64,7 @@ Trigger_CHANnel(that.Trigger_CHANnel),
 Trigger_Model(that.Trigger_Model),
 Trigger_Edge(that.Trigger_Edge),
 Trigger_Level(that.Trigger_Level),
-Vec_time(that.Vec_time)
+Vec_time(that.Vec_time),
+Profile(that.Profile)
 {
 }

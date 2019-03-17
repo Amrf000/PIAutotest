@@ -86,5 +86,7 @@ public:
     uint Trigger_Level;//"1"
     //========================
     uint Vec_time;
+    //==========
+    QString Profile;
 };
 #endif // INSTCONFIG_H

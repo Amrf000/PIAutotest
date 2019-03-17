@@ -100,6 +100,14 @@ void WorkerThread::run()
     //PyRun_SimpleString("import eb");
     //PyRun_SimpleString("print(eb.getRunFlag()");
 
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/dlls"+"\")").toLocal8Bit());
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/lib"+"\")").toLocal8Bit());
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/lib/site-packages"+"\")").toLocal8Bit());
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/lib/site-packages/win32"+"\")").toLocal8Bit());
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/lib/site-packages/win32/lib"+"\")").toLocal8Bit());
+    PyRun_SimpleString(QString("sys.path.append(\""+QCoreApplication::applicationDirPath()+"/Orlando_AutoTest/module/lib/site-packages/win32/Pythonwin"+"\")").toLocal8Bit());
+    PyRun_SimpleString("gPIFlag=1");
     // here comes the ***magic***
     std::string buffer;
     //QTextEdit* pedit = m_pEdit;
@@ -107,8 +115,13 @@ void WorkerThread::run()
     {
         // switch sys.stdout to custom handler
         emb::stdout_write_type write = [pMain,&buffer] (std::string s) {
-            buffer += s;
-            emit pMain->append(s.c_str());
+            if(s=="\n")
+            {
+
+            }else{
+                buffer += s;
+                emit pMain->append(s.c_str());
+            }
         };
         emb::set_stdout(write);
         PyRun_SimpleString("import os,ekk");

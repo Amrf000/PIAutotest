@@ -138,6 +138,8 @@ void InstrumentWidget::setConfig(QStringList vecs,QVariantMap conf,InstConfig* c
    ui->comboBox_channel4_bandwidth->setCurrentText(m_config->channel4_bandwidth);
 
    ui->comboBox_Slect_Model->setCurrentText(m_config->Slect_Model);
+
+   ui->textEditProfile->setText(m_config->Profile);
 }
 
 void InstrumentWidget::on_lineEdit_channel1_label_textEdited(const QString &val)
@@ -395,4 +397,9 @@ void InstrumentWidget::on_comboBox_Slect_Model_currentIndexChanged(const QString
 void InstrumentWidget::on_lineEdit_vec_time_textEdited(const QString &val)
 {
     if(m_config) m_config->Vec_time = val.toUInt();
+}
+
+void InstrumentWidget::on_textEditProfile_textChanged()
+{
+    if(m_config) m_config->Profile = ui->textEditProfile->toPlainText();
 }

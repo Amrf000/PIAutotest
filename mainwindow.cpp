@@ -14,6 +14,7 @@
 #include <QVariantMap>
 #include "workerthread.h"
 #include "instrumentwidget.h"
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),pWorker(NULL),
@@ -114,6 +115,7 @@ void MainWindow::SaveParam()
         xlsx.write(row,51,cf.ch4_measure_type3);
         xlsx.write(row,52,cf.ch4_measure_type4);
         xlsx.write(row,53,cf.ch4_measure_hold);
+        xlsx.write(row,54,cf.Profile);
         row++;
     }
     bool flag = xlsx.save();
@@ -164,6 +166,7 @@ void MainWindow::loadParam()
 
 void MainWindow::init()
 {
+    ui->widget_vnc->createContainer(this,"vncviewer.exe");
     connect(this, SIGNAL(append(QString)),ui->textEdit, SLOT(append(QString)));
     //connect(ui->widget,SIGNAL(),this,SLOT(onVecChange(QString)));
 
@@ -239,7 +242,7 @@ void MainWindow::init()
          c.ch4_measure_type3 = xlsx.cellAt(row,51)->value().toString();
          c.ch4_measure_type4 = xlsx.cellAt(row,52)->value().toString();
          c.ch4_measure_hold = (0==QString::compare(xlsx.cellAt(row,53)->value().toString(),"TRUE",Qt::CaseInsensitive));
-
+         c.Profile = xlsx.cellAt(row,54)->value().toString();
          //}
          m_conf.insert(std::pair<QString,InstConfig>(c.suiteName,c));
      }
@@ -405,3 +408,5 @@ void MainWindow::on_start_toggled(bool running)
         }
     }
 }
+
+
