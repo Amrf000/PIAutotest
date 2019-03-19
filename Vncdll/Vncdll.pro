@@ -43,6 +43,7 @@ MOC_DIR=generated_files
 
 LIBS += -lUser32
 LIBS += -lGdi32
+#LIBS += -lKERNEL32
 
 INCLUDEPATH += E:\dev\visa\PIAutotest\Detours-master\include
 LIBS += -LE:\dev\visa\PIAutotest\Detours-master\lib.X64 -ldetours

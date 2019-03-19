@@ -28,7 +28,7 @@ void Console()
 MainWindow* pMain = NULL;
 int main(int argc, char *argv[])
 {
-    Console();
+    //Console();
     std::cout<<"start@@";
     std::cerr<<"sss";
     qDebug()<<"start!";
@@ -38,5 +38,6 @@ int main(int argc, char *argv[])
     pMain->setWindowState(Qt::WindowMaximized);
     pMain->show();
     int RetVal = a.exec();
+    delete pMain;
     return RetVal;
 }

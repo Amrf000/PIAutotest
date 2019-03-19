@@ -38,6 +38,8 @@ MainWindow::~MainWindow()
     //reSave
     SaveInI();
     SaveParam();
+    if(pWorker)
+       pWorker->stop();
 }
 
 void MainWindow::SaveInI()

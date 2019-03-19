@@ -99,3 +99,5 @@ INCLUDEPATH += C:\Users\liuyawu\AppData\Local\Programs\Python\Python35\include
 LIBS += -LC:\Users\liuyawu\AppData\Local\Programs\Python\Python35\libs -lpython3
     }
 }
+
+DEFINES += _ATL_NATIVE_INITIALIZATION

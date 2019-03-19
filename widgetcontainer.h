@@ -1,13 +1,17 @@
 #ifndef WIDGETCONTAINER_H
 #define WIDGETCONTAINER_H
-
+#ifndef _AFXDLL
+#define _AFXDLL
+#endif
+#include <afxwin.h>
 #include <QWidget>
-#include <Windows.h>
+//#include <Windows.h>
 #include <TlHelp32.h>
 #include <QProcess>
 #include <QGridLayout>
 #include <QWindow>
 //#include <QSharedMemory>
+#include "server.h"
 
 class MainWindow;
 class QLocalServer;
@@ -28,8 +32,10 @@ class WidgetContainer : public QWidget
     QWidget * m_vncwidget;
     QWindow * m_vncDlg;
     QGridLayout *m_layout;
+    Server* pServer;
 public:
     explicit WidgetContainer(QWidget* parent=nullptr);
+    virtual ~WidgetContainer();
     QWidget *createContainer(MainWindow* pm,const QString &iAppName, bool iAutoOpen = true);
     static DWORD findProcessId(const QString &iAppName);
     //static DWORD startUpProcess(const QString &iAppName);
@@ -49,6 +55,14 @@ public slots:
     void onAuthenticationCreate(long hwnd);
     void onVisChanged(QWindow::Visibility flag);
     void onCDesktopWinShow(long hwnd);
+    void onViewerShow(long hwnd);
+    void onactiveChanged();
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void focusInEvent(QFocusEvent *event);
+    void focusOutEvent(QFocusEvent *event);
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+
 };
 
 #endif // WIDGETCONTAINER_H

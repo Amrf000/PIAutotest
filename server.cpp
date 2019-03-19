@@ -1,7 +1,7 @@
 #include "server.h"
 #include <QDebug>
 
-Server::Server()
+Server::Server():Eexit(0)
 {
     sharedMemory.setKey("qvnc");
     if(sharedMemory.isAttached())
@@ -22,6 +22,10 @@ Server::Server()
 }
 Server::~Server()
 {
+}
+void Server::stop()
+{
+    Eexit = 1;
 }
 void Server::run()
 {
@@ -47,6 +51,9 @@ void Server::run()
            {
                emit this->onViewerCreate(localData.Viewer);
                qDebug()<<"Viewer=crt"<<localData.Viewer;
+           }else if(localData.ViewerState==SyscData::C_SHOWWND){
+               qDebug()<<"Viewer=show"<<localData.Viewer;
+               emit this->onViewerShow(localData.Viewer);
            }else{
                qDebug()<<"Viewer=des"<<localData.Viewer;
            }
@@ -71,6 +78,13 @@ void Server::run()
                qDebug()<<"Authentication=des"<<localData.Authentication;
            }
            localData.AuthenticationState = 0;
+        }
+        if(Eexit==1 || localData.Eexit==1)
+        {
+            localData.Eexit = 1;
+            upShareMemory();
+            msleep(100);
+            break;
         }
         upShareMemory();
         msleep(20);

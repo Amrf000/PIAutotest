@@ -10,4 +10,6 @@ public:
     Vncdll();
 };
 
+extern "C" VNCDLLSHARED_EXPORT void Tralala();
+
 #endif // VNCDLL_H

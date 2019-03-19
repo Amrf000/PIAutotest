@@ -1,12 +1,19 @@
 #include "client.h"
+#include <Windows.h>
 
-Client::Client()
+Client::Client():Eexit(0)
 {
     sharedMemory.setKey("qvnc");
 }
 Client::~Client()
 {
+
 }
+void Client::stop()
+{
+    Eexit = 1;
+}
+extern HWND desktopHWND;
 void Client::run()
 {
 	while(true)
@@ -14,11 +21,28 @@ void Client::run()
         downShareMemory();
         switch(localData.sCmdType)
         {
-            case SyscData::S_CONNECT:
+        case SyscData::S_CONNECT:
             printf("sCmdType=%d\n",localData.sCmdType);
             localData.sCmdType = 0;
             break;
+        case SyscData::S_ACTIVE:
+            printf("sCmdType=%d\n",localData.sCmdType);
+            if(desktopHWND)
+            {
+                SetActiveWindow(desktopHWND);
+                SetFocus(desktopHWND);
+            }
+            localData.sCmdType = 0;
+            break;
         default:
+            break;
+        }
+        if(Eexit==1 || localData.Eexit==1)
+        {
+            localData.Eexit = 1;
+            upShareMemory();
+            msleep(100);
+            TerminateProcess(GetCurrentProcess(),0);
             break;
         }
         upShareMemory();

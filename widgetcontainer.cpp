@@ -1,5 +1,6 @@
 #include "widgetcontainer.h"
-#include <Windows.h>
+//#include <Windows.h>
+#include <QApplication>
 #include <QCoreApplication>
 #include <string>
 #include <functional>
@@ -17,13 +18,16 @@
 class CloseEventFilter : public QObject
 {
 //     Q_OBJECT
+    char _flag[8];
 public:
-     CloseEventFilter(QObject *parent) : QObject(parent) {}
+     CloseEventFilter(QObject *parent,const char* flag) : QObject(parent) {
+         strncpy(_flag,flag,7);
+     }
 
 protected:
      bool eventFilter(QObject *obj, QEvent *event)
      {
-         QEvent::Close;
+         //QEvent::Close;
           /*if (event->type() == QEvent::Close)
           {
                // Do something interesting, emit a signal for instance.
@@ -35,13 +39,13 @@ protected:
           }else{
               printf("e=%d\n",(int)event->type());
           }*/
-           printf("e=%d\n",(int)event->type());
+           printf("%s ev=%d\n",_flag,(int)event->type());
           return QObject::eventFilter(obj, event);
      }
 
 };
 
-WidgetContainer::WidgetContainer(QWidget* parent):QWidget(parent)
+WidgetContainer::WidgetContainer(QWidget* parent):QWidget(parent),pServer(NULL)
 {
     m_data.processId=0;
     m_data.wndHandle=NULL;
@@ -52,21 +56,117 @@ WidgetContainer::WidgetContainer(QWidget* parent):QWidget(parent)
     m_vncDlg=NULL;
     m_layout=NULL;
     m_appName ="";
+
+    //QTimer *timer = new QTimer(this);
+    //connect(timer, SIGNAL(timeout()), this, SLOT(onactiveChanged()));
+    //timer->start(2000);
+    this->setAttribute(Qt::WA_ShowWithoutActivating);
+    this->setFocusPolicy(Qt::NoFocus);
 }
+
+WidgetContainer::~WidgetContainer()
+{
+    if(pServer)
+        pServer->stop();
+}
+
+void WidgetContainer::onactiveChanged()
+{
+    printf("vncDlg active change\n");
+    //if(m_vncDlg && IsWindowVisible((HWND)m_vncDlg->winId()))
+    //{
+       //SetActiveWindow((HWND)m_vncDlg->winId());
+       //Sleep(1000);
+       //SetFocus((HWND)m_vncDlg->winId());
+       //SetForegroundWindow((HWND)m_vncDlg->winId());
+    //}
+}
+
+void ShowInTaskbar(HWND hWnd, BOOL bshow)
+{
+    HRESULT hr;
+    ITaskbarList *pTaskbarList;
+
+    hr = CoCreateInstance(CLSID_TaskbarList,NULL,CLSCTX_INPROC_SERVER, IID_ITaskbarList,(void**)&pTaskbarList);
+
+    if ( hr == S_OK )
+    {
+        hr = pTaskbarList->HrInit();
+
+        if ( hr == S_OK )
+        {
+            if(bshow)
+            {
+                pTaskbarList->AddTab(hWnd);
+            }
+            else
+            {
+                pTaskbarList->DeleteTab(hWnd);
+            }
+        }
+
+        pTaskbarList->Release();
+    }
+}
+
 
 void WidgetContainer::onCDesktopWinCreate(long hwnd)
 {
     m_vncDlg = QWindow::fromWinId((WId) hwnd);
-    this->m_vncwidget = QWidget::createWindowContainer(m_vncDlg);
+    //m_vncDlg->setMouseGrabEnabled(true);
+    //m_vncDlg->setKeyboardGrabEnabled(true);
+    this->m_vncwidget = QWidget::createWindowContainer(m_vncDlg,this);
+    connect(m_vncDlg,SIGNAL(activeChanged()),this,SLOT(onactiveChanged()));
     if(m_layout==NULL)
        m_layout=new QGridLayout(this);
     m_layout->addWidget(this->m_vncwidget,0,0);
+    this->m_vncwidget->setFocusPolicy(Qt::NoFocus);
     printf("flag=%d\n",(long)m_vncDlg->flags());
-    connect(m_vncDlg,SIGNAL(visibilityChanged(QWindow::Visibility)),this,SLOT(onVisChanged(QWindow::Visibility)));
+    //connect(m_vncDlg,SIGNAL(visibilityChanged(QWindow::Visibility)),this,SLOT(onVisChanged(QWindow::Visibility)));
+    //CloseEventFilter *closeFilter = new CloseEventFilter(m_vncwidget,"vnc");
+    //m_vncwidget->installEventFilter(closeFilter);
 }
 void WidgetContainer::onCDesktopWinShow(long hwnd)
 {
     emit m_vncDlg->setGeometry(this->geometry());
+    m_connectDlg->hide();
+
+    //m_vncDlg->requestActivate();
+    //m_vncDlg->setKeyboardGrabEnabled(true);
+    //m_vncDlg->setMouseGrabEnabled(true);
+    //QTimer::singleShot(2000,this, [this]{
+    //     SetActiveWindow((HWND)m_vncDlg->winId());
+
+    //});
+     //QTimer::singleShot(3000,this, [this]{
+     //   SetFocus((HWND)m_vncDlg->winId());
+     //});
+    //QApplication::setActiveWindow(this->m_vncDlg);
+    ShowInTaskbar((HWND)hwnd,false);
+}
+
+void WidgetContainer::onViewerShow(long hwnd)
+{
+    ShowInTaskbar((HWND)hwnd,false);
+}
+
+void WidgetContainer::mousePressEvent(QMouseEvent *event)
+{
+    printf("focusInEvent\n");
+}
+
+void WidgetContainer::focusInEvent(QFocusEvent *event)
+{
+    printf("focusInEvent\n");
+}
+void WidgetContainer::focusOutEvent(QFocusEvent *event)
+{
+    printf("focusOutEvent\n");
+}
+bool WidgetContainer::nativeEvent(const QByteArray &eventType, void *message, long *result)
+{
+    printf("nativeEvent\n");
+    return true;
 }
 
 void WidgetContainer::onVisChanged(QWindow::Visibility flag)
@@ -75,13 +175,28 @@ void WidgetContainer::onVisChanged(QWindow::Visibility flag)
 
 }
 
+
 void WidgetContainer::onViewerCreate(long hwnd)
 {
     m_connectDlg = QWindow::fromWinId((WId) hwnd);
-    this->m_widget = QWidget::createWindowContainer(m_connectDlg);
+    //m_connectDlg->setMouseGrabEnabled(true);
+    //m_connectDlg->setKeyboardGrabEnabled(true);
+    this->m_widget = QWidget::createWindowContainer(m_connectDlg,this);
+    //SetFocus(hwnd);
+    this->m_widget->setFocusPolicy(Qt::NoFocus);
     if(m_layout==NULL)
        m_layout=new QGridLayout(this);
     m_layout->addWidget(this->m_widget,0,0);
+
+    //QTimer::singleShot(100,this, [hwnd]{
+     //      ShowInTaskbar((HWND)hwnd,false);;
+    //});
+
+    //ShowInTaskBar((HWND)this->m_widget->winId(),false);
+    //CWnd *pCWnd=CWnd::FromHandle((HWND)this->m_widget->winId());
+    //pCWnd->ModifyStyleEx(WS_EX_APPWINDOW, WS_EX_TOOLWINDOW);
+    //CloseEventFilter *closeFilter = new CloseEventFilter(m_widget,"view");
+    //m_widget->installEventFilter(closeFilter);
 }
 void WidgetContainer::onConnectionCreate(long hwnd)
 {
@@ -94,12 +209,16 @@ void WidgetContainer::onAuthenticationCreate(long hwnd)
 
 QWidget *WidgetContainer::createContainer(MainWindow* pm,const QString &iAppName, bool iAutoOpen)
 {
-    Server* pServer = new Server;
+    //CloseEventFilter *closeFilter = new CloseEventFilter(this,"this");
+    //this->installEventFilter(closeFilter);
+
+    pServer = new Server;
     connect(pServer,SIGNAL(onCDesktopWinCreate(long)),this,SLOT(onCDesktopWinCreate(long)));
     connect(pServer,SIGNAL(onViewerCreate(long)),this,SLOT(onViewerCreate(long)));
     connect(pServer,SIGNAL(onConnectionCreate(long)),this,SLOT(onConnectionCreate(long)));
     connect(pServer,SIGNAL(onAuthenticationCreate(long)),this,SLOT(onAuthenticationCreate(long)));
     connect(pServer,SIGNAL(onCDesktopWinShow(long)),this,SLOT(onCDesktopWinShow(long)));
+    connect(pServer,SIGNAL(onViewerShow(long)),this,SLOT(onViewerShow(long)));
     pServer->start();
     m_appName = iAppName;
     //HookInjection(const_cast<TCHAR*>(iAppName.toStdWString().c_str()),const_cast<TCHAR*>((QString("Vncdll.dll").toStdWString().c_str())));
@@ -111,7 +230,7 @@ QWidget *WidgetContainer::createContainer(MainWindow* pm,const QString &iAppName
     if(true==process->waitForStarted(50000))
     {
         //Sleep(40*1000);
-        Dll_Injection(const_cast<TCHAR*>((QString("Vncdll.dll").toStdWString().c_str())),const_cast<TCHAR*>(iAppName.toStdWString().c_str()));
+        //Dll_Injection(const_cast<TCHAR*>((QString("Vncdll.dll").toStdWString().c_str())),const_cast<TCHAR*>(iAppName.toStdWString().c_str()));
 
 
         /*handle_data data;

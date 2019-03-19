@@ -11,3 +11,8 @@ https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-enumwind
 https://www.cnblogs.com/zhaox583132460/p/3394702.html
 https://stackoverflow.com/questions/10246444/how-can-i-get-enumwindows-to-list-all-windows
 https://doc.qt.io/qt-5/qprocess.html#startDetached
+
+
+https://social.msdn.microsoft.com/Forums/en-US/8dfb32c3-39d2-48b5-9a3d-37fd3c6f2956/removing-taskbar-icon-when-minimized-win32?forum=vssmartdevicesnative
+https://stackoverflow.com/questions/17681686/minimized-application-showing-above-the-task-bar
+https://stackoverflow.com/questions/39708947/make-taskbar-icon-visible-on-window-hide?rq=1
