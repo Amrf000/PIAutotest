@@ -48,6 +48,7 @@ public:
 private:
     SyscData localData;
     long Eexit;
+    int missing;
 private:
 	QSharedMemory sharedMemory;
 };

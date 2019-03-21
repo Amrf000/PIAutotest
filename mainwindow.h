@@ -58,6 +58,8 @@ private slots:
     void on_pushButton_select_local_path_2_clicked();
     void on_pushButton_open_local_path_2_clicked();
     void on_start_toggled(bool checked);
+protected:
+    bool event(QEvent *event);
 };
 extern MainWindow* pMain;
 #endif // MAINWINDOW_H

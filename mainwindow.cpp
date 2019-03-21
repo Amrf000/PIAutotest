@@ -411,4 +411,18 @@ void MainWindow::on_start_toggled(bool running)
     }
 }
 
+bool MainWindow::event(QEvent *e)
+{
+    if(e->type()==QEvent::WindowStateChange)
+    {
+          if(isMinimized())
+          {
+              e->ignore();
+              return true;
+          }else{
+              e->accept();
+          }
+    }
+    QMainWindow::event(e);
+}
 

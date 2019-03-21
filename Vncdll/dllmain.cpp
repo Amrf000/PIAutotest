@@ -137,6 +137,12 @@ LRESULT CALLBACK hookWndProc( int code,WPARAM wParam,LPARAM lParam )
               printf("WM_KILLFOCUS\n");
         }else if(pmsg->message == WM_ACTIVATE){
               printf("WM_ACTIVATE\n");
+        }else if(pmsg->message == WM_CLOSE){
+            if(desktopHWND && desktopHWND==pmsg->hwnd)
+            {
+               printf("WM_CLOSE\n");
+               TerminateProcess(GetCurrentProcess(),0);
+            }
         }
         //       //SetActiveWindow((HWND)m_vncDlg->winId());
         //Sleep(1000);

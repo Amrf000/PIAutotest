@@ -1,7 +1,7 @@
 #include "client.h"
 #include <Windows.h>
 
-Client::Client():Eexit(0)
+Client::Client():Eexit(0),missing(0)
 {
     sharedMemory.setKey("qvnc");
 }
@@ -37,11 +37,11 @@ void Client::run()
         default:
             break;
         }
-        if(Eexit==1 || localData.Eexit==1)
+        if(Eexit==1 || localData.Eexit==1 || missing>100)
         {
             localData.Eexit = 1;
             upShareMemory();
-            msleep(100);
+            msleep(10);
             TerminateProcess(GetCurrentProcess(),0);
             break;
         }
@@ -58,9 +58,11 @@ void Client::downShareMemory()
 {
     if (!sharedMemory.attach())
     {
+        missing++;
         printf("Unable to attach to shared memory segment. downerror=%d\n",sharedMemory.error());
         return;
     }else{
+        missing=0;
         //printf("attach down success\n");
     }
     sharedMemory.lock();
@@ -79,9 +81,11 @@ void Client::upShareMemory()
 {
     if (!sharedMemory.attach())
     {
+        missing++;
         printf( "Unable to attach to shared memory segment. uperr=%d\n",sharedMemory.error());
         return;
     }else{
+        missing=0;
         //printf( "attach up success\n");
     }
     sharedMemory.lock();

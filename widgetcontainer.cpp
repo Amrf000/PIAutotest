@@ -60,8 +60,8 @@ WidgetContainer::WidgetContainer(QWidget* parent):QWidget(parent),pServer(NULL)
     //QTimer *timer = new QTimer(this);
     //connect(timer, SIGNAL(timeout()), this, SLOT(onactiveChanged()));
     //timer->start(2000);
-    this->setAttribute(Qt::WA_ShowWithoutActivating);
-    this->setFocusPolicy(Qt::NoFocus);
+    //this->setAttribute(Qt::WA_ShowWithoutActivating);
+    //this->setFocusPolicy(Qt::NoFocus);
 }
 
 WidgetContainer::~WidgetContainer()
@@ -112,24 +112,31 @@ void ShowInTaskbar(HWND hWnd, BOOL bshow)
 
 void WidgetContainer::onCDesktopWinCreate(long hwnd)
 {
-    m_vncDlg = QWindow::fromWinId((WId) hwnd);
-    //m_vncDlg->setMouseGrabEnabled(true);
-    //m_vncDlg->setKeyboardGrabEnabled(true);
-    this->m_vncwidget = QWidget::createWindowContainer(m_vncDlg,this);
-    connect(m_vncDlg,SIGNAL(activeChanged()),this,SLOT(onactiveChanged()));
-    if(m_layout==NULL)
-       m_layout=new QGridLayout(this);
-    m_layout->addWidget(this->m_vncwidget,0,0);
-    this->m_vncwidget->setFocusPolicy(Qt::NoFocus);
-    printf("flag=%d\n",(long)m_vncDlg->flags());
-    //connect(m_vncDlg,SIGNAL(visibilityChanged(QWindow::Visibility)),this,SLOT(onVisChanged(QWindow::Visibility)));
-    //CloseEventFilter *closeFilter = new CloseEventFilter(m_vncwidget,"vnc");
-    //m_vncwidget->installEventFilter(closeFilter);
+    if(m_vncDlg==NULL)
+    {
+        m_vncDlg = QWindow::fromWinId((WId) hwnd);
+        //m_vncDlg->setMouseGrabEnabled(true);
+        //m_vncDlg->setKeyboardGrabEnabled(true);
+        this->m_vncwidget = QWidget::createWindowContainer(m_vncDlg,this);
+        //connect(m_vncDlg,SIGNAL(activeChanged()),this,SLOT(onactiveChanged()));
+        ShowInTaskbar((HWND)hwnd,false);
+        if(m_layout==NULL)
+           m_layout=new QGridLayout(this);
+        m_layout->addWidget(this->m_vncwidget,0,0);
+        //this->m_vncwidget->setFocusPolicy(Qt::NoFocus);
+        //printf("flag=%d\n",(long)m_vncDlg->flags());
+        //connect(m_vncDlg,SIGNAL(visibilityChanged(QWindow::Visibility)),this,SLOT(onVisChanged(QWindow::Visibility)));
+        //CloseEventFilter *closeFilter = new CloseEventFilter(m_vncwidget,"vnc");
+        //m_vncwidget->installEventFilter(closeFilter);
+        //m_vncwidget->setGeometry(this->geometry());
+    }
 }
 void WidgetContainer::onCDesktopWinShow(long hwnd)
 {
     emit m_vncDlg->setGeometry(this->geometry());
     m_connectDlg->hide();
+
+    //this->m_widget->hide();
 
     //m_vncDlg->requestActivate();
     //m_vncDlg->setKeyboardGrabEnabled(true);
@@ -142,12 +149,11 @@ void WidgetContainer::onCDesktopWinShow(long hwnd)
      //   SetFocus((HWND)m_vncDlg->winId());
      //});
     //QApplication::setActiveWindow(this->m_vncDlg);
-    ShowInTaskbar((HWND)hwnd,false);
 }
 
 void WidgetContainer::onViewerShow(long hwnd)
 {
-    ShowInTaskbar((HWND)hwnd,false);
+    //ShowInTaskbar((HWND)hwnd,false);
 }
 
 void WidgetContainer::mousePressEvent(QMouseEvent *event)
@@ -175,28 +181,31 @@ void WidgetContainer::onVisChanged(QWindow::Visibility flag)
 
 }
 
-
 void WidgetContainer::onViewerCreate(long hwnd)
 {
-    m_connectDlg = QWindow::fromWinId((WId) hwnd);
-    //m_connectDlg->setMouseGrabEnabled(true);
-    //m_connectDlg->setKeyboardGrabEnabled(true);
-    this->m_widget = QWidget::createWindowContainer(m_connectDlg,this);
-    //SetFocus(hwnd);
-    this->m_widget->setFocusPolicy(Qt::NoFocus);
-    if(m_layout==NULL)
-       m_layout=new QGridLayout(this);
-    m_layout->addWidget(this->m_widget,0,0);
+    if(m_connectDlg ==NULL)
+    {
+        m_connectDlg = QWindow::fromWinId((WId) hwnd);
+        //m_connectDlg->setMouseGrabEnabled(true);
+        //m_connectDlg->setKeyboardGrabEnabled(true);
+        this->m_widget = QWidget::createWindowContainer(m_connectDlg,this);
+        ShowInTaskbar((HWND)hwnd,false);
+        //SetFocus(hwnd);
+        //ShowInTaskbar((HWND)hwnd,false);this->m_widget->setFocusPolicy(Qt::NoFocus);
+        if(m_layout==NULL)
+           m_layout=new QGridLayout(this);
+        m_layout->addWidget(this->m_widget,0,0);
 
-    //QTimer::singleShot(100,this, [hwnd]{
-     //      ShowInTaskbar((HWND)hwnd,false);;
-    //});
+        //QTimer::singleShot(100,this, [hwnd]{
+         //      ShowInTaskbar((HWND)hwnd,false);;
+        //});
 
-    //ShowInTaskBar((HWND)this->m_widget->winId(),false);
-    //CWnd *pCWnd=CWnd::FromHandle((HWND)this->m_widget->winId());
-    //pCWnd->ModifyStyleEx(WS_EX_APPWINDOW, WS_EX_TOOLWINDOW);
-    //CloseEventFilter *closeFilter = new CloseEventFilter(m_widget,"view");
-    //m_widget->installEventFilter(closeFilter);
+        //ShowInTaskBar((HWND)this->m_widget->winId(),false);
+        //CWnd *pCWnd=CWnd::FromHandle((HWND)this->m_widget->winId());
+        //pCWnd->ModifyStyleEx(WS_EX_APPWINDOW, WS_EX_TOOLWINDOW);
+        //CloseEventFilter *closeFilter = new CloseEventFilter(m_widget,"view");
+        //m_widget->installEventFilter(closeFilter);
+    }
 }
 void WidgetContainer::onConnectionCreate(long hwnd)
 {
