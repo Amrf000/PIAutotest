@@ -134,7 +134,8 @@ void WidgetContainer::onCDesktopWinCreate(long hwnd)
 void WidgetContainer::onCDesktopWinShow(long hwnd)
 {
     emit m_vncDlg->setGeometry(this->geometry());
-    m_connectDlg->hide();
+    //m_connectDlg->hide();bmark not use
+    m_widget->hide();//bmark
 
     //this->m_widget->hide();
 
@@ -169,10 +170,11 @@ void WidgetContainer::focusOutEvent(QFocusEvent *event)
 {
     printf("focusOutEvent\n");
 }
-bool WidgetContainer::nativeEvent(const QByteArray &eventType, void *message, long *result)
+bool WidgetContainer::nativeEvent(const QByteArray &eventType, void *message, long *result)//bmark
 {
     printf("nativeEvent\n");
-    return true;
+    return QWidget::nativeEvent(eventType,message,result);
+
 }
 
 void WidgetContainer::onVisChanged(QWindow::Visibility flag)
@@ -189,7 +191,8 @@ void WidgetContainer::onViewerCreate(long hwnd)
         //m_connectDlg->setMouseGrabEnabled(true);
         //m_connectDlg->setKeyboardGrabEnabled(true);
         this->m_widget = QWidget::createWindowContainer(m_connectDlg,this);
-        ShowInTaskbar((HWND)hwnd,false);
+        //ShowInTaskbar((HWND)hwnd,false);
+        ShowInTaskbar((HWND)m_widget->winId(),false);//bmark
         //SetFocus(hwnd);
         //ShowInTaskbar((HWND)hwnd,false);this->m_widget->setFocusPolicy(Qt::NoFocus);
         if(m_layout==NULL)

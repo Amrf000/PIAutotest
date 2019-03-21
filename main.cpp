@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <iostream>
 #include <QDebug>
+#include <Registry.hpp>
 #ifdef main
 #undef main
 #endif
@@ -28,6 +29,10 @@ void Console()
 MainWindow* pMain = NULL;
 int main(int argc, char *argv[])
 {
+    const std::wstring testSubKey = L"Software\\RealVNC\\vncviewer";
+    winreg::RegKey key(HKEY_CURRENT_USER, testSubKey);
+    key.SetStringValue(L"Scaling", L"AspectFit");
+    key.Close();
     //Console();
     std::cout<<"start@@";
     std::cerr<<"sss";

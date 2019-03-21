@@ -45,7 +45,8 @@ HEADERS += \
     workerthread.h \
     widgetcontainer.h \
     injection.h \
-    server.h
+    server.h \
+    Registry.hpp
 
 FORMS += \
         mainwindow.ui \
