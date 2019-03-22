@@ -1,9 +1,12 @@
 #include "mainwindow.h"
-#include <QApplication>
 #include <windows.h>
 #include <iostream>
 #include <QDebug>
-#include <Registry.hpp>
+#include <QtSingleApplication>
+#include <QMessageBox>
+#include "Registry.hpp"
+using namespace winreg;
+
 #ifdef main
 #undef main
 #endif
@@ -29,20 +32,28 @@ void Console()
 MainWindow* pMain = NULL;
 int main(int argc, char *argv[])
 {
-    const std::wstring testSubKey = L"Software\\RealVNC\\vncviewer";
+    //Console();
+    const std::wstring testSubKey = L"SOFTWARE\\RealVNC\\vncviewer";
     winreg::RegKey key(HKEY_CURRENT_USER, testSubKey);
     key.SetStringValue(L"Scaling", L"AspectFit");
+    key.SetStringValue(L"EulaAccepted", L"db346d1e0fd4a6d2872111de6217b84d04adc9e0");
     key.Close();
-    //Console();
+
     std::cout<<"start@@";
-    std::cerr<<"sss";
+    //std::cerr<<"sss";
     qDebug()<<"start!";
-    QApplication a(argc, argv);
+    QtSingleApplication app(argc, argv);
+    if (app.isRunning())
+    {
+         QMessageBox::information(NULL, "PIAuto","already run",QMessageBox::Ok);
+         app.sendMessage("raise_window_noop");
+         return EXIT_SUCCESS;
+    }
     pMain = new MainWindow();
     pMain->init();
     pMain->setWindowState(Qt::WindowMaximized);
     pMain->show();
-    int RetVal = a.exec();
+    int RetVal = app.exec();
     delete pMain;
     return RetVal;
 }
